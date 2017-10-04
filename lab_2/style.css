@@ -43,6 +43,15 @@ footer p a{
 	color:white;
 }
 
+article{
+    margin:40px;
+}
+
+article img{
+    max-width: 700px;
+    max-height: 700px;
+}
+
 /*ul*/
 .topnav {
     list-style-type: none;
