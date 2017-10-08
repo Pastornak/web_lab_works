@@ -57,9 +57,18 @@ img{
     max-height: 900px;
 }
 
+@keyframes example{
+    0%{background-color: white; color: black;}
+    50%{background-color: black; color: white;}
+    100%{background-color: white; color: black;}
+}
+
 .div_border{
     border-style: solid;
     margin:10px;
+    animation-name: example;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
 }
 
 /*ul*/
@@ -85,8 +94,8 @@ img{
 }
 
 .topnavi a:hover, .dropdown:hover .dropbtn {
-    background-color: red;
-    transform: rotateY(180deg);
+    background-color: yellow;
+    transform: rotateY(360deg);
     transition: 1s;
 }
 

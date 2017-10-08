@@ -75,7 +75,7 @@ article img{
 }
 
 .topnavi a:hover, .dropdown:hover .dropbtn {
-    background-color: red;
+    background-color: yellow;
 }
 
 .dropdown {
