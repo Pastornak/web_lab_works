@@ -128,3 +128,14 @@ transition: 1s}
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+@keyframes zoomin{
+    from{width: 0; height: 0}
+    to{width: 900px; height: 270px;}
+
+}
+
+.zoominimg{
+    animation-name: zoomin;
+    animation-duration: 2s;
+}
