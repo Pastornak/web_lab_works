@@ -95,7 +95,8 @@ img{
 
 .topnavi a:hover, .dropdown:hover .dropbtn {
     background-color: yellow;
-    transform: rotateY(360deg);
+    /*transform: rotateY(360deg);*/
+    transform: rotateZ(360deg);
     transition: 1s;
 }
 
@@ -121,7 +122,8 @@ img{
     text-align: left;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {background-color: #f1f1f1;
+transition: 1s}
 
 .dropdown:hover .dropdown-content {
     display: block;
