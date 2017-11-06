@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>Відгуки</title>
+	<link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Nulp_logo_ukr.jpg/809px-Nulp_logo_ukr.jpg" type="image/jpg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/sticky-footer.css">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+	  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+	  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+	    <ul class="navbar-nav">
+	      <li class="nav-item">
+	        <a class="nav-link" href="Головна.htm">Головна <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="Новини.htm">Новини</a>
+	      </li>
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          Студентам
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	          <a class="dropdown-item" href="Навчальний план.htm">Програма</a>
+	          <a class="dropdown-item" href="#">Лабораторні</a>
+	          <a class="dropdown-item" href="#">Література</a>
+	        </div>
+	      </li>
+	      <li class="nav-item active">
+	        <a class="nav-link" href="Відгуки.htm">Відгуки</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="Контакти.htm">Контакти</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="Admin.htm">Admin</a>
+	      </li>
+	    </ul>
+	  </div>
+	</nav>
+
+	<div class = container id="responses">
+		<div class="row">
+			<div class = col-lg>
+				<p>
+					<span class="h2 pull-left">Вася Пупкін</span>
+					<span><i>11.11.2017, 14:00</i></span>
+				</p>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class = col-lg>
+				<p>
+					<span class="h2 pull-left">Вася Пупкін</span>
+					<span><i>11.11.2017, 14:00</i></span>
+				</p>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+		</div>
+		<hr>
+		<div class="row" id="newResponseField">
+			<div class = "col-lg">
+				<div class="form-group">
+					<textarea class="form-control" rows="5" id="comment" placeholder = "Новий відгук..."></textarea>
+				</div>
+				<button class="btn btn-primary float-right" type="submit" onclick="addResponse()">Відправити</button>
+			</div>
+		</div>
+	</div>
+
+	<footer class = "footer">
+		<div class = "container">
+			<center>
+				<span class = "text">Made by: Yurii Pasternak</span>
+				<br>
+				<span class = "text">Contact information: <a href="mailto:someone@example.com">thebest@gmail.com</a>.</span>
+			</center>
+		</div>
+	</footer>
+
+	<script>
+		function addResponse(){
+			var responseText = document.getElementById("comment");
+			if(responseText.value == ""){
+				alert("Порожній відгук!");
+				return;
+			}
+			var responseField = document.getElementById("newResponseField");
+			var element = document.getElementById("responses");
+
+			var responseRow = document.createElement("div");
+			responseRow.setAttribute("class", 'row');
+			var responseCol = document.createElement("div");
+			responseCol.setAttribute("class", "col-lg");
+			var responseHeader = document.createElement("p");
+			var responseFill = document.createElement("p");
+			var responseHeaderName = document.createElement("span");
+			responseHeaderName.setAttribute("class", "h2 pull-left");
+			var responseHeaderDate = document.createElement("span");
+			var responseHeaderDateItalic = document.createElement("i");
+			var date = new Date();
+			var dateString = "";
+			dateString = date.getDate() + "." + date.getMonth() + "." + (date.getYear() + 1900)
+				+ ", " + date.getHours() + ":" + date.getMinutes();
+			responseHeaderDateItalic.innerHTML = dateString;
+			responseHeaderName.innerHTML = "Вася Пупкін";
+			responseFill.innerHTML = responseText.value;
+
+			responseHeaderDate.appendChild(responseHeaderDateItalic);
+			responseHeader.appendChild(responseHeaderName);
+			responseHeader.appendChild(responseHeaderDate);
+			responseCol.appendChild(responseHeader);
+			responseCol.appendChild(responseFill);
+			responseRow.appendChild(responseCol);
+
+			element.insertBefore(responseRow, responseField);
+			element.insertBefore(document.createElement("hr"), responseField);
+			responseText.value = "";
+		}
+	</script>
+	<script src="js/jquery-3.2.1.slim.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+  </body>
+</html>
