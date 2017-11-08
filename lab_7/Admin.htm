@@ -64,13 +64,13 @@
 			</div>
 			<div class="col">
 				<div class="form-group">
-					<input class="form-control" type="text" id="example-text-input" placeholder="Заголовок...">
+					<input class="form-control" type="text" id="header" placeholder="Заголовок...">
 					<br>
-					<textarea class="form-control" rows="3" id="exampleTextarea" placeholder="Короткий опис статті..."></textarea>
+					<textarea class="form-control" rows="3" id="shortText" placeholder="Короткий опис статті..."></textarea>
 					<br>
-					<textarea class="form-control" rows="6" id="exampleTextarea" placeholder="Стаття..."></textarea>
+					<textarea class="form-control" rows="6" id="newsText" placeholder="Стаття..."></textarea>
 				</div>
-				<button class="btn btn-primary float-right" type="submit">Відправити</button>
+				<button class="btn btn-primary float-right" type="submit" onclick="addNews()">Відправити</button>
 			</div>
 		</div>
 	</div>
@@ -85,6 +85,25 @@
 		</div>
 	</footer>
 
+	<script>
+		function addNews(){
+			var newsHeader = document.getElementById("header");
+			var newsShortText = document.getElementById("shortText");
+			var newsText = document.getElementById("newsText");
+			if(newsHeader.value == ""){
+				alert("Вкажіть заголовок статті");
+				return;
+			}
+			if(newsShortText.value == ""){
+				alert("Вкажіть короткий опис статті");
+				return;
+			}
+			if(newsText.value == ""){
+				alert("Вкажіть текст статті");
+				return;
+			}
+		}
+	</script>
 	<script src="js/jquery-3.2.1.slim.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.js"></script>

@@ -78,6 +78,8 @@
 		<div class="row" id="newResponseField">
 			<div class = "col-lg">
 				<div class="form-group">
+					<textarea class="form-control" rows="1" id="name" placeholder="Ваше ім'я..."></textarea>
+					<br>
 					<textarea class="form-control" rows="5" id="comment" placeholder = "Новий відгук..."></textarea>
 				</div>
 				<button class="btn btn-primary float-right" type="submit" onclick="addResponse()">Відправити</button>
@@ -98,6 +100,11 @@
 	<script>
 		function addResponse(){
 			var responseText = document.getElementById("comment");
+			var nameText = document.getElementById("name");
+			if(nameText.value == ""){
+				alert("Вкажіть ваше ім'я");
+				return;
+			}
 			if(responseText.value == ""){
 				alert("Порожній відгук!");
 				return;
@@ -120,7 +127,7 @@
 			dateString = date.getDate() + "." + date.getMonth() + "." + (date.getYear() + 1900)
 				+ ", " + date.getHours() + ":" + date.getMinutes();
 			responseHeaderDateItalic.innerHTML = dateString;
-			responseHeaderName.innerHTML = "Вася Пупкін";
+			responseHeaderName.innerHTML = nameText.value + " ";
 			responseFill.innerHTML = responseText.value;
 
 			responseHeaderDate.appendChild(responseHeaderDateItalic);
@@ -133,6 +140,7 @@
 			element.insertBefore(responseRow, responseField);
 			element.insertBefore(document.createElement("hr"), responseField);
 			responseText.value = "";
+			nameText.value = "";
 		}
 	</script>
 	<script src="js/jquery-3.2.1.slim.min.js"></script>
