@@ -124,7 +124,7 @@
 			var responseHeaderDateItalic = document.createElement("i");
 			var date = new Date();
 			var dateString = "";
-			dateString = date.getDate() + "." + date.getMonth() + "." + (date.getYear() + 1900)
+			dateString = date.getDate() + "." + date.getMonth() + "." + (date.getFullYear())
 				+ ", " + date.getHours() + ":" + date.getMinutes();
 			responseHeaderDateItalic.innerHTML = dateString;
 			responseHeaderName.innerHTML = nameText.value + " ";

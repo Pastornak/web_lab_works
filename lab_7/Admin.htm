@@ -59,7 +59,7 @@
 				    <input type="file" accept="image/*" class="form-control-file" id="userInputFile" aria-describedby="fileHelp" onchange="loadPreviewPhoto(event)">
 				    <small id="fileHelp" class="form-text text-muted">Вибрати фото статті.</small>
 				</div>
-				<img src="map.png" alt = "your photo" class="img-fluid" id="user-image">
+				<img src="photo_ico.png" alt = "your photo" class="img-fluid" id="user-image" width = '300px'>
 				<br>
 			</div>
 			<div class="col">
@@ -87,9 +87,11 @@
 
 	<script>
 		function addNews(){
+			var DEFAULT_PHOTO = "file:///C:/Program%20Files/web_labs/lab_7/photo_ico.png"
 			var newsHeader = document.getElementById("header");
 			var newsShortText = document.getElementById("shortText");
 			var newsText = document.getElementById("newsText");
+			var imagePreview = document.getElementById('user-image');
 			if(newsHeader.value == ""){
 				alert("Вкажіть заголовок статті");
 				return;
@@ -100,6 +102,10 @@
 			}
 			if(newsText.value == ""){
 				alert("Вкажіть текст статті");
+				return;
+			}
+			if(imagePreview.src == DEFAULT_PHOTO){
+				alert("Завантажте фото для статті");
 				return;
 			}
 		}
