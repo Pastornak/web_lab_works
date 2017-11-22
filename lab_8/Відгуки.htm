@@ -128,6 +128,9 @@
 		}
 
 		function show(){
+			if(isOnline()){
+				//server stuff
+			}
 			var responses = getResponses();
 		    if ((typeof responses !== 'undefined') && (responses.length > 0)) {
 			    for(var i = 0; i < responses.length; i++) {
@@ -148,9 +151,12 @@
 				alert("Порожній відгук!");
 				return;
 			}
-			//createResponse(nameText, responseText, date);
 			var response = new Response(nameText.value, responseText.value, date);
-			addToStorage(response);
+			if(isOnline()){
+				//server stuff
+			} else{
+				addToStorage(response);
+			}
 			createResponse(response);
 			responseText.value = "";
 			nameText.value = "";

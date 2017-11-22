@@ -83,6 +83,10 @@
 	</footer>
 
 	<script>
+		function isOnline() {
+			return window.navigator.onLine; 
+		}
+
 		class News{
 			constructor(header, shortText, fullText, image){
 				this.header = header;
@@ -102,17 +106,18 @@
 		}
 
 		function createNews(news){
-			console.log(news.header);
 			var element = document.getElementById("newsRow");
 			element.innerHTML += '<div class="col-lg-4"> <center><img src = "' + news.image + '" alt = "News" width="300" height = "300"></center><center><h3>'
 			+ news.header + '</h3></center><p>' + news.shortText + '</p></div>'
 		}
 
 		function show(){
+			if(isOnline()){
+				//server stuff
+			}
 			var news = getNews();
 		    if ((typeof news !== 'undefined') && (news.length > 0)) {
 			    for(var i = 0; i < news.length; i++) {
-			    	console.log(news.header);
 		    		createNews(news[i]);
 			    }
 			}
