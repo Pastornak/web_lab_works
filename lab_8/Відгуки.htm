@@ -154,9 +154,8 @@
 			var response = new Response(nameText.value, responseText.value, date);
 			if(isOnline()){
 				//server stuff
-			} else{
-				addToStorage(response);
 			}
+			addToStorage(response);
 			createResponse(response);
 			responseText.value = "";
 			nameText.value = "";

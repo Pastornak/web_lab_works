@@ -134,9 +134,8 @@
 			var news = new News(newsHeader.value, newsShortText.value, newsText.value, imagePreview.src);
 			if(isOnline()){
 				//server stuff
-			} else{
-				addToStorage(news);
 			}
+			addToStorage(news);
 			alert('Готово!');
 			newsHeader.value = "";
 			newsShortText.value = "";
