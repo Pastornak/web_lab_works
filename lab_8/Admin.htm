@@ -56,7 +56,7 @@
 		<div class="row">
 			<div class="col">
 				<div class="form-group">
-				    <input type="file" accept="image/*" class="form-control-file" id="userInputFile" aria-describedby="fileHelp" onchange="loadPreviewPhoto(event)">
+				    <input type="file" accept="image/*" class="form-control-file" id="userInputFile" aria-describedby="fileHelp" onchange="test(this)">
 				    <small id="fileHelp" class="form-text text-muted">Вибрати фото статті.</small>
 				</div>
 				<img src="photo_ico.png" alt = "your photo" class="img-fluid" id="user-image" width = '300px'>
@@ -86,7 +86,6 @@
 	</footer>
 
 	<script>
-		var backupImage;
 		class News{
 			constructor(header, shortText, fullText, image){
 				this.header = header;
@@ -127,9 +126,13 @@
 				alert("Завантажте фото для статті");
 				return;
 			}
-			console.log(backupImage);
-			var news = new News(newsHeader.value, newsShortText.value, newsText.value, backupImage);
+			var news = new News(newsHeader.value, newsShortText.value, newsText.value, imagePreview.src);
 			addToStorage(news);
+			alert('Готово!');
+			newsHeader.value = "";
+			newsShortText.value = "";
+			newsText.value = "";
+			imagePreview.src = DEFAULT_PHOTO;
 		}
 
 		function addToStorage(newsItem){
@@ -139,9 +142,12 @@
 		    return false;
 		}
 
+		function test(item){
+			console.log(item.files);
+		}
+
 		function loadPreviewPhoto(event){
 			var imagePreview = document.getElementById('user-image');
-			backupImage = imagePreview.src;
     		imagePreview.src = URL.createObjectURL(event.target.files[0]);
 		}
 	</script>
