@@ -1,4 +1,7 @@
-var backupImage;
+function isOnline() {
+	return window.navigator.onLine; 
+}
+
 class News{
 	constructor(header, shortText, fullText, image){
 		this.header = header;
@@ -18,7 +21,8 @@ function getNews() {
 }
 
 function addNews(){
-	var DEFAULT_PHOTO = "file:///C:/Program%20Files/web_labs/lab_7/photo_ico.png"
+	var DEFAULT_PHOTO = "./photo_ico.png";
+	var imageForm = document.getElementById("userInputFile");
 	var newsHeader = document.getElementById("header");
 	var newsShortText = document.getElementById("shortText");
 	var newsText = document.getElementById("newsText");
@@ -39,9 +43,17 @@ function addNews(){
 		alert("Завантажте фото для статті");
 		return;
 	}
-	console.log(backupImage);
-	var news = new News(newsHeader.value, newsShortText.value, newsText.value, backupImage);
+	var news = new News(newsHeader.value, newsShortText.value, newsText.value, imagePreview.src);
+	if(isOnline()){
+		//server stuff
+	}
 	addToStorage(news);
+	alert('Готово!');
+	newsHeader.value = "";
+	newsShortText.value = "";
+	newsText.value = "";
+	imagePreview.src = DEFAULT_PHOTO;
+	imageForm.value="";
 }
 
 function addToStorage(newsItem){
@@ -51,25 +63,30 @@ function addToStorage(newsItem){
     return false;
 }
 
-function loadPreviewPhoto(event){
-	var imagePreview = document.getElementById('user-image');
-	backupImage = imagePreview.src;
-	imagePreview.src = URL.createObjectURL(event.target.files[0]);
-}
-
-function show(){
-	var news = getNews();
-    if ((typeof news !== 'undefined') && (news.length > 0)) {
-	    for(var i = 0; i < news.length; i++) {
-	    	console.log(news.header);
-    		createNews(news[i]);
-	    }
-	}
+function loadPreviewPhoto(){
+	var src = document.getElementById("userInputFile");
+	var target = document.getElementById("user-image");
+	var fr = new FileReader();
+	fr.readAsDataURL(src.files[0]);
+	fr.onload = function(e){
+		target.src = this.result;
+	};
 }
 
 function createNews(news){
-	console.log(news.image);
 	var element = document.getElementById("newsRow");
-	element.innerHTML += '<div class="col-lg-4"> <center><img src = "' + news.image + '" alt = "News" width="300" height = "300"></center><center><h3>' 
+	element.innerHTML += '<div class="col-lg-4"> <center><img src = "' + news.image + '" alt = "News" width="300" height = "300"></center><center><h3>'
 	+ news.header + '</h3></center><p>' + news.shortText + '</p></div>'
+}
+
+function show(){
+	if(isOnline()){
+		//server stuff
+	}
+	var news = getNews();
+    if ((typeof news !== 'undefined') && (news.length > 0)) {
+	    for(var i = 0; i < news.length; i++) {
+    		createNews(news[i]);
+	    }
+	}
 }
