@@ -66,6 +66,7 @@ function getFeedbacks() {
 					var tempFeed = new Feedback(cursor.value.name, cursor.value.feedback, cursor.value.date);
 					//console.log(tempFeed);
 				  	feedbacks.push(tempFeed);
+				  	createFeedback(tempFeed);
 				  	cursor.continue();
 				}
 			};
@@ -85,18 +86,6 @@ function show(){
 	    		createFeedback(feedbacks[i]);
 		    }
 		}
-	} else{
-		for(item in feedbacks){
-			console.log(typeof item);
-		}
-		for(var i = 0; i < feedbacks.length; i++) {
-    		var obj = feedbacks.Feedback[i];
-    		
-	    }
-		feedbacks.forEach(function (item){
-			console.log(item.name);
-			createFeedback(item);
-		});
 	}
 }
 
