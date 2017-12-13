@@ -17,11 +17,14 @@ class Feedback{
 }
 
 function addToStorage(feedback){
-	var feedbacks = getFeedbacks();
 	if(useLocalStorage){
+		var feedbacks = new Array;
+		var feedback_item = localStorage.getItem('feedbacks');
+	    if (feedback_item !== null) {
+	        feedbacks = JSON.parse(feedback_item); 
+	    }
 	    feedbacks.push(feedback);
 	    localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
-	    //show();
 	    return false;
 	} else{
 		var openDB = indexedDB.open("feedback", 1);
@@ -29,74 +32,62 @@ function addToStorage(feedback){
 		openDB.onerror = function(event) {
 		  alert("Error occurred when loading feedback");
 		};
-		openDB.success = function(event) {
+		openDB.onsuccess = function(event) {
 			var db = openDB.result;
 			var tx = db.transaction(["feedbacks"], "readwrite");
 			var store = tx.objectStore("feedbacks");
-			var addFeedback = store.add(feedback);
+			var addFeedback = store.put(feedback);
 			addFeedback.onsuccess = function(event){
+				alert("Feedback created");
 			}
 			addFeedback.onerror = function(event){
 				alert("Error occurred when loading feedbacks");
 			}
 			tx.oncomplete = function(){
-				//openDB.close();
+				db.close();
 			}
 		};
 	}
 }
 
-function getFeedbacks() {
-	var feedbacks = new Array;
+function showLocalInfo(){
 	if(useLocalStorage){
 	    var feedback_item = localStorage.getItem('feedbacks');
 	    if (feedback_item !== null) {
 	        feedbacks = JSON.parse(feedback_item); 
 	    }
-	    
-	} else{
-		var openDB = indexedDB.open("feedback", 1);
-		openDB.onsuccess = function(event) {
-			var db = openDB.result;
-			var tx = db.transaction(["feedbacks"], "readwrite");
-	    	var store = tx.objectStore("feedbacks");
-	    	store.openCursor().onsuccess = function(event) {
-				var cursor = event.target.result;
-				if (cursor) {
-					var tempFeed = new Feedback(cursor.value.name, cursor.value.feedback, cursor.value.date);
-					//console.log(tempFeed);
-				  	feedbacks.push(tempFeed);
-				  	cursor.continue();
-				}
-			};
-	    	tx.oncomplete = function(){
-	    		//openDB.close();
-	    	}
-		}
-	}
-	return feedbacks;
-}
-
-function show(){
-	var feedbacks = getFeedbacks();
-	if(useLocalStorage){
 	    if ((typeof feedbacks !== 'undefined') && (feedbacks.length > 0)) {
 		    for(var i = 0; i < feedbacks.length; i++) {
 	    		createFeedback(feedbacks[i]);
 		    }
 		}
 	} else{
-		for(item in feedbacks){
-			console.log(typeof item);
+		var openDB = indexedDB.open("feedback", 1);
+		openDB.onupgradeneeded = function() {
+		    var db = openDB.result;
+		    var store = db.createObjectStore("feedbacks", {keyPath: "name"});
+		    store.createIndex("name", "name", { unique: false });
+		    store.createIndex("feedback", "feedback", { unique: false });
+		    store.createIndex("date", "date", { unique: false });
 		}
-		for(var i = 0; i < feedbacks.length; i++) {
-    		var obj = feedbacks.Feedback[i];
-    		
-	    }
-		feedbacks.forEach(function (item){
-			console.log(item.name);
-			createFeedback(item);
-		});
+		openDB.onsuccess = function(event) {
+			var db = openDB.result;
+			var tx = db.transaction("feedbacks", "readwrite");
+	    	var store = tx.objectStore("feedbacks");
+	    	store.openCursor().onsuccess = function(event) {
+				var cursor = event.target.result;
+				if (cursor) {
+					var tempFeed = new Feedback(cursor.value.name, cursor.value.feedback, cursor.value.date);
+					//console.log(tempFeed);
+				  	//feedbacks.push(tempFeed);
+				  	createFeedback(tempFeed);
+				  	cursor.continue();
+				}
+			};
+	    	tx.oncomplete = function(){
+	    		db.close();
+	    	}
+		}
 	}
 }
 
@@ -130,31 +121,9 @@ function createFeedback(feedback){
 	var dateString = date.getDate() + "." + (date.getMonth() + 1) + "." + (date.getFullYear())
 		+ ", " + date.getHours() + ":" + date.getMinutes();
 
-	/*element.innerHTML += '<div class="row">
-	<div class = col-lg><p><span class="h2 pull-left">'+ nameText + ' ' + 
-	'</span><span><i>' + dateString + '</i></span></p><p>' + responseText + '</p></div></div><hr>';*/
-
 	var responseRow = document.createElement("div");
-	responseRow.setAttribute("class", 'row');
-	var responseCol = document.createElement("div");
-	responseCol.setAttribute("class", "col-lg");
-	var responseHeader = document.createElement("p");
-	var responseFill = document.createElement("p");
-	var responseHeaderName = document.createElement("span");
-	responseHeaderName.setAttribute("class", "h2 pull-left");
-	var responseHeaderDate = document.createElement("span");
-	var responseHeaderDateItalic = document.createElement("i");
-	responseHeaderDateItalic.innerHTML = dateString;
-	responseHeaderName.innerHTML = nameText + " ";
-	responseFill.innerHTML = responseText;
-
-	responseHeaderDate.appendChild(responseHeaderDateItalic);
-	responseHeader.appendChild(responseHeaderName);
-	responseHeader.appendChild(responseHeaderDate);
-	responseCol.appendChild(responseHeader);
-	responseCol.appendChild(responseFill);
-	responseRow.appendChild(responseCol);
+	responseRow.innerHTML = '<div class="row"><div class = col-lg><p><span class="h2 pull-left">'+ nameText + ' ' + 
+	'</span><span><i>' + dateString + '</i></span></p><p>' + responseText + '</p></div></div><hr>';
 
 	element.insertBefore(responseRow, responseField);
-	element.insertBefore(document.createElement("hr"), responseField);
 }
