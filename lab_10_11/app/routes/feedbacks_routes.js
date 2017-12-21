@@ -1,5 +1,14 @@
 var ObjectID = require('mongodb').ObjectID;
 module.exports = function(app, db) {
+  app.get('/feedbacks/all', (req, res) => {
+    db.collection('feedbacks').find({}).toArray(function(err, item) {
+      if (err) {
+        res.send({'error':'An error has occurred'});
+      } else {
+        res.send(item);
+      } 
+    });
+  });
   app.get('/feedbacks/:id', (req, res) => {
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
